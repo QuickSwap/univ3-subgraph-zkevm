@@ -19,7 +19,7 @@ import {
   Swap as SwapEvent,
 } from "../types/templates/Pool/Pool";
 import { convertTokenToDecimal, loadTransaction, safeDiv } from "../utils";
-import { FACTORY_ADDRESS, ONE_BI, ZERO_BD, ZERO_BI } from "../utils/constants";
+import { BI_6228109, FACTORY_ADDRESS, ONE_BI, ZERO_BD, ZERO_BI } from "../utils/constants";
 import {
   findEthPerToken,
   getEthPriceInUSD,
@@ -35,6 +35,7 @@ import {
   updateUniswapDayData,
 } from "../utils/intervalUpdates";
 import { createTick, feeTierToTickSpacing } from "../utils/tick";
+import { log } from '@graphprotocol/graph-ts'
 
 export function handleInitialize(event: Initialize): void {
   // update pool sqrt price and tick
@@ -311,7 +312,10 @@ export function handleSwap(event: SwapEvent): void {
   let bundle = Bundle.load("1")!;
   let factory = Factory.load(FACTORY_ADDRESS)!;
   let pool = Pool.load(event.address.toHexString())!;
-
+  log.info('Message to be displayed: {}, {}, {}', ["inside", "handleswap", 'already a string'])
+  if (event.block.number.lt(BI_6228109)) {
+    return;
+  }
   // hot fix for bad pricing
   if (pool.id == "0x9663f2ca0454accad3e094448ea6f77443880454") {
     return;
@@ -348,6 +352,7 @@ export function handleSwap(event: SwapEvent): void {
     amount1Abs,
     token1 as Token
   ).div(BigDecimal.fromString("2"));
+  log.info('Eth price: {}', [bundle.ethPriceUSD.toString()])
   let amountTotalETHTracked = safeDiv(
     amountTotalUSDTracked,
     bundle.ethPriceUSD

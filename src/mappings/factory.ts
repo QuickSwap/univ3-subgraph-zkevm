@@ -1,6 +1,6 @@
 import { WHITELIST_TOKENS } from './../utils/pricing'
 /* eslint-disable prefer-const */
-import { FACTORY_ADDRESS, ZERO_BI, ONE_BI, ZERO_BD, ADDRESS_ZERO } from './../utils/constants'
+import { FACTORY_ADDRESS, ZERO_BI, ONE_BI, ZERO_BD, ADDRESS_ZERO, ONE_BD } from './../utils/constants'
 import { Factory } from '../types/schema'
 import { PoolCreated } from '../types/Factory/Factory'
 import { Pool, Token, Bundle } from '../types/schema'
@@ -33,7 +33,7 @@ export function handlePoolCreated(event: PoolCreated): void {
 
     // create new bundle for tracking eth price
     let bundle = new Bundle('1')
-    bundle.ethPriceUSD = ZERO_BD
+    bundle.ethPriceUSD = ONE_BD
     bundle.save()
   }
 
