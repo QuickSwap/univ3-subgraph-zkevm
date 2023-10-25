@@ -3,7 +3,7 @@ import { ONE_BD, ZERO_BD, ZERO_BI } from './constants'
 import { Bundle, Pool, Token } from './../types/schema'
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 import { exponentToBigDecimal, safeDiv } from '../utils/index'
-
+import { log } from '@graphprotocol/graph-ts'
 const WETH_ADDRESS = '0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9'
 const USDC_WETH_005_POOL = '0xe968fbdfe01fb45bcf1c71c4b105fd271db5a10b'
 
@@ -32,15 +32,16 @@ let STABLE_COINS: string[] = [
 
 let MINIMUM_ETH_LOCKED = BigDecimal.fromString('0.1')
 
-let Q192 = 2 ** 192
+let Q2 = BigInt.fromI32(2);
+let Q192 = Q2.pow(192)
 export function sqrtPriceX96ToTokenPrices(sqrtPriceX96: BigInt, token0: Token, token1: Token): BigDecimal[] {
   let num = sqrtPriceX96.times(sqrtPriceX96).toBigDecimal()
   let denom = BigDecimal.fromString(Q192.toString())
+  log.info('pricing -02: {}, {}', [denom.toString(), Q192.toString()])
   let price1 = num
     .div(denom)
     .times(exponentToBigDecimal(token0.decimals))
     .div(exponentToBigDecimal(token1.decimals))
-
   let price0 = safeDiv(BigDecimal.fromString('1'), price1)
   return [price0, price1]
 }

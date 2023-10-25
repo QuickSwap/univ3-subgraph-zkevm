@@ -313,9 +313,6 @@ export function handleSwap(event: SwapEvent): void {
   let factory = Factory.load(FACTORY_ADDRESS)!;
   let pool = Pool.load(event.address.toHexString())!;
   log.info('Message to be displayed: {}, {}, {}', ["inside", "handleswap", 'already a string'])
-  if (event.block.number.lt(BI_6228109)) {
-    return;
-  }
   // hot fix for bad pricing
   if (pool.id == "0x9663f2ca0454accad3e094448ea6f77443880454") {
     return;
@@ -352,11 +349,15 @@ export function handleSwap(event: SwapEvent): void {
     amount1Abs,
     token1 as Token
   ).div(BigDecimal.fromString("2"));
-  log.info('Eth price: {}', [bundle.ethPriceUSD.toString()])
-  let amountTotalETHTracked = safeDiv(
-    amountTotalUSDTracked,
-    bundle.ethPriceUSD
-  );
+  let amountTotalETHTracked =  ZERO_BD;
+  if (bundle.ethPriceUSD.gt(ZERO_BD)){
+    amountTotalETHTracked = safeDiv(
+      amountTotalUSDTracked,
+      bundle.ethPriceUSD
+    );
+  }
+  
+
   let amountTotalUSDUntracked = amount0USD
     .plus(amount1USD)
     .div(BigDecimal.fromString("2"));
@@ -420,7 +421,6 @@ export function handleSwap(event: SwapEvent): void {
   );
   token1.feesUSD = token1.feesUSD.plus(feesUSD);
   token1.txCount = token1.txCount.plus(ONE_BI);
-
   // updated pool ratess
   let prices = sqrtPriceX96ToTokenPrices(
     pool.sqrtPrice,
@@ -436,7 +436,6 @@ export function handleSwap(event: SwapEvent): void {
   bundle.save();
   token0.derivedETH = findEthPerToken(token0 as Token);
   token1.derivedETH = findEthPerToken(token1 as Token);
-
   /**
    * Things afffected by new USD rates
    */
@@ -543,7 +542,6 @@ export function handleSwap(event: SwapEvent): void {
     amountTotalUSDTracked
   );
   token1HourData.feesUSD = token1HourData.feesUSD.plus(feesUSD);
-
   swap.save();
   token0DayData.save();
   token1DayData.save();
@@ -572,7 +570,6 @@ export function handleSwap(event: SwapEvent): void {
         .abs()
         .div(tickSpacing)
     : ZERO_BI;
-
   if (numIters.gt(BigInt.fromI32(100))) {
     // In case more than 100 ticks need to be updated ignore the update in
     // order to avoid timeouts. From testing this behavior occurs only upon
@@ -590,6 +587,7 @@ export function handleSwap(event: SwapEvent): void {
       loadTickUpdateFeeVarsAndSave(i.toI32(), event);
     }
   }
+
 }
 
 export function handleFlash(event: FlashEvent): void {
