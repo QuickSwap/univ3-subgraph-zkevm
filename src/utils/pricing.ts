@@ -15,7 +15,8 @@ export let WHITELIST_TOKENS: string[] = [
   '0xb73603c5d87fa094b7314c74ace2e64d165016fb', // USDC
   '0xf417f5a458ec102b90352f697d6e2ac3a3d2851f', // USDT
   '0x305e88d809c9dc03179554bfbf85ac05ce8f18d6', // WBTC
-  '0x0f52a51287f9b3894d73df05164d0ee2533ccbb4' // MATIC
+  '0x0f52a51287f9b3894d73df05164d0ee2533ccbb4', // MATIC
+  '0x01d27580c464d5b3b26f78bee12e684901dbc02a' //MATICX
 ]
 
 let STABLE_COINS: string[] = [
@@ -24,7 +25,7 @@ let STABLE_COINS: string[] = [
   '0xf417f5a458ec102b90352f697d6e2ac3a3d2851f' // USDT
 ]
 
-let MINIMUM_ETH_LOCKED = BigDecimal.fromString('0.1')
+let MINIMUM_ETH_LOCKED = BigDecimal.fromString('0.0000001')
 
 let Q2 = BigInt.fromI32(2);
 let Q192 = Q2.pow(192)
