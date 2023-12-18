@@ -6,11 +6,11 @@ features:
 dataSources:
   - kind: ethereum/contract
     name: Factory
-    network: manta-pacific-mainnet
+    network: zkatana
     source:
       address: '0x56c2162254b0E4417288786eE402c2B41d4e181e'
       abi: Factory
-      startBlock: 357492
+      startBlock: 24771
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -37,7 +37,7 @@ dataSources:
     name: NonfungiblePositionManager
     network: manta-pacific-mainnet
     source:
-      address: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff'
+      address: '0x55BeE1bD3Eb9986f6d2d963278de09eE92a3eF1D'
       abi: NonfungiblePositionManager
       startBlock: 357492
     mapping:
