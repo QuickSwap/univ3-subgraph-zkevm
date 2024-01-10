@@ -6,11 +6,11 @@ features:
 dataSources:
   - kind: ethereum/contract
     name: Factory
-    network: imtbl-zkevm-testnet
+    network: imtbl-zkevm
     source:
       address: '0x56c2162254b0E4417288786eE402c2B41d4e181e'
       abi: Factory
-      startBlock: 1355587
+      startBlock: 356091
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -35,11 +35,11 @@ dataSources:
           handler: handlePoolCreated
   - kind: ethereum/contract
     name: NonfungiblePositionManager
-    network: imtbl-zkevm-testnet
+    network: imtbl-zkevm
     source:
       address: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff'
       abi: NonfungiblePositionManager
-      startBlock: 1355587
+      startBlock: 356091
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -69,7 +69,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Pool
-    network: imtbl-zkevm-testnet
+    network: imtbl-zkevm
     source:
       abi: Pool
     mapping:
