@@ -4,22 +4,18 @@ import { Bundle, Pool, Token } from './../types/schema'
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 import { exponentToBigDecimal, safeDiv } from '../utils/index'
 import { log } from '@graphprotocol/graph-ts'
-const WETH_ADDRESS = '0x3a0c2ba54d6cbd3121f01b96dfd20e99d1696c9d'
-const USDC_WETH_005_POOL = '0x525299ce36040baee478d17ec26fe5962a75a304'
+const WETH_ADDRESS = '0x87A851C652E5d772ba61ec320753c6349bb3C1E3'
+const USDC_WETH_005_POOL = '0xe7babdd42f804788925cc5f5bb614a49d080d912'
 
 // token where amounts should contribute to tracked volume and liquidity
 // usually tokens that many tokens are paired with s
 export let WHITELIST_TOKENS: string[] = [
   WETH_ADDRESS, // WETH
-  '0x6de8acc0d406837030ce4dd28e7c08c5a96a30d2', //USDC
-  '0x68bcc7f1190af20e7b572bcfb431c3ac10a936ab', //USDT
-  '0x52a6c53869ce09a731cd772f245b97a4401d3348', //WETH
-  '0x235f9a2dc29e51ce7d103bcc5dfb4f5c9c3371de' //WBTC
+  '0x04292af1cf8687235a83766d55b307880fc5e76d' //USDC
 ]
 
 let STABLE_COINS: string[] = [
-  '0x6de8acc0d406837030ce4dd28e7c08c5a96a30d2', // USDC
-  '0x68bcc7f1190af20e7b572bcfb431c3ac10a936ab', //USDT
+  '0x04292af1cf8687235a83766d55b307880fc5e76d' // USDC
 ]
 
 let MINIMUM_ETH_LOCKED = BigDecimal.fromString('0.0001')
@@ -42,7 +38,7 @@ export function getEthPriceInUSD(): BigDecimal {
   // fetch eth prices for each stablecoin
   let usdcPool = Pool.load(USDC_WETH_005_POOL) // dai is token0
   if (usdcPool !== null) {
-    return usdcPool.token1Price
+    return usdcPool.token0Price
   } else {
     return ZERO_BD
   }
