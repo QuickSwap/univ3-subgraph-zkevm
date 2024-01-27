@@ -607,6 +607,32 @@ export class Pool extends Entity {
     this.set("feeTier", Value.fromBigInt(value));
   }
 
+  get protocolFee0(): BigInt {
+    let value = this.get("protocolFee0");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set protocolFee0(value: BigInt) {
+    this.set("protocolFee0", Value.fromBigInt(value));
+  }
+
+  get protocolFee1(): BigInt {
+    let value = this.get("protocolFee1");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set protocolFee1(value: BigInt) {
+    this.set("protocolFee1", Value.fromBigInt(value));
+  }
+
   get liquidity(): BigInt {
     let value = this.get("liquidity");
     if (!value || value.kind == ValueKind.NULL) {

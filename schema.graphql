@@ -85,6 +85,11 @@ type Pool @entity {
   token1: Token!
   # fee amount
   feeTier: BigInt!
+
+  protocolFee0: BigInt!
+  
+  protocolFee1: BigInt!
+  
   # in range liquidity
   liquidity: BigInt!
   # current price tracker

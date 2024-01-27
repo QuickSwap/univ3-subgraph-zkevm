@@ -121,6 +121,8 @@ export function handlePoolCreated(event: PoolCreated): void {
   pool.feeGrowthGlobal1X128 = ZERO_BI
   pool.token0Price = ZERO_BD
   pool.token1Price = ZERO_BD
+  pool.protocolFee0 = ZERO_BI
+  pool.protocolFee1 = ZERO_BI
   pool.observationIndex = ZERO_BI
   pool.totalValueLockedToken0 = ZERO_BD
   pool.totalValueLockedToken1 = ZERO_BD

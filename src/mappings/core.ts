@@ -17,6 +17,7 @@ import {
   Initialize,
   Mint as MintEvent,
   Swap as SwapEvent,
+  SetFeeProtocol as SetFeeProtocolEvent,
 } from "../types/templates/Pool/Pool";
 import { convertTokenToDecimal, loadTransaction, safeDiv } from "../utils";
 import { BI_6228109, FACTORY_ADDRESS, ONE_BI, ZERO_BD, ZERO_BI } from "../utils/constants";
@@ -599,6 +600,16 @@ export function handleFlash(event: FlashEvent): void {
   pool.feeGrowthGlobal0X128 = feeGrowthGlobal0X128 as BigInt;
   pool.feeGrowthGlobal1X128 = feeGrowthGlobal1X128 as BigInt;
   pool.save();
+}
+
+export function handleSetProtocolFee(event: SetFeeProtocolEvent): void {
+  let pool = Pool.load(event.address.toHexString())
+  if (pool){
+    pool.protocolFee0 = BigInt.fromI32(event.params.feeProtocol0New)
+    pool.protocolFee1 = BigInt.fromI32(event.params.feeProtocol1New)
+    pool.save() 
+  }
+
 }
 
 function updateTickFeeVarsAndSave(tick: Tick, event: ethereum.Event): void {

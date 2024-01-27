@@ -98,3 +98,5 @@ templates:
           handler: handleBurn
         - event: Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)
           handler: handleFlash
+        - event: SetFeeProtocol(uint8,uint8,uint8,uint8)
+          handler: handleSetProtocolFee
